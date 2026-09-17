@@ -1,0 +1,25 @@
+SNAKE BYPASS + PAGBANK PIX (SANDBOX)
+
+O que foi feito:
+- snake_store.html agora envia o checkout para /api/create-pix.
+- server.js guarda o token no backend e chama o PagBank Sandbox.
+- O checkout mostra QR Code e Pix Copia e Cola retornados pelo PagBank.
+- Nenhum token foi colocado no HTML.
+
+COMO TESTAR
+1. Instale Node.js 18 ou mais novo.
+2. Abra um terminal nesta pasta.
+3. Defina a variável PAGBANK_TOKEN com o NOVO token do Sandbox.
+   Windows PowerShell:
+   $env:PAGBANK_TOKEN="SEU_TOKEN_AQUI"
+   Linux/macOS:
+   export PAGBANK_TOKEN="SEU_TOKEN_AQUI"
+4. Rode: node server.js
+5. Abra: http://localhost:3000
+6. Escolha um produto, plano, coloque nome/e-mail e clique em Continuar para PIX.
+
+IMPORTANTE
+- Não cole o token no snake_store.html.
+- O QR Code é de uso único segundo a documentação do PagBank.
+- Esta versão cria o PIX no Sandbox; ainda não faz entrega automática do produto.
+- Para produção, será necessário hospedar o backend com HTTPS e configurar webhook para confirmar PAID antes de liberar o produto.

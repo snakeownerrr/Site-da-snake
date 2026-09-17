@@ -1,0 +1,8 @@
+{
+  "name": "snake-bypass-pagbank-sandbox",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Snake Bypass + PagBank PIX Sandbox",
+  "scripts": {"start":"node server.js"},
+  "engines": {"node": ">=18"}
+}
