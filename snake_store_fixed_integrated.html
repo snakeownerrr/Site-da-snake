@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snake Store</title>
+<style>
+:root{--bg:#070707;--card:#101010;--card2:#151515;--text:#fff;--muted:#8d8d8d;--accent:#ffffff;--line:#242424}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 50% -10%,#222 0,#070707 34%);color:var(--text);min-height:100vh}
+header{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%;backdrop-filter:blur(15px);position:sticky;top:0;background:#070707cc;z-index:5}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px}.logo span{color:#fff}
+nav{display:flex;gap:28px;color:#aaa;font-size:14px}nav a{color:inherit;text-decoration:none}nav a:hover{color:#fff}
+.cart{border:1px solid #303030;background:#111;border-radius:12px;padding:10px 15px;color:white;cursor:pointer}
+.hero{max-width:1100px;margin:0 auto;padding:85px 6% 50px;text-align:center}.pill{display:inline-block;border:1px solid #444;background:#161616;color:#fff;padding:8px 13px;border-radius:999px;font-size:12px;margin-bottom:22px}
+h1{font-size:clamp(42px,7vw,76px);line-height:.95;letter-spacing:-4px}.hero h1 span{color:#fff}.hero p{max-width:590px;margin:22px auto;color:var(--muted);line-height:1.6}
+.btn{display:inline-block;background:#fff;color:#061009;padding:13px 20px;border-radius:11px;font-weight:800;text-decoration:none;border:0;cursor:pointer}
+section{max-width:1100px;margin:auto;padding:30px 6% 90px}.title{display:flex;justify-content:space-between;align-items:end;margin-bottom:20px}.title h2{font-size:28px}.title p{color:#777;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.product{background:linear-gradient(145deg,#151515,#0d0d0d);border:1px solid var(--line);border-radius:18px;padding:20px;transition:.2s}.product:hover{transform:translateY(-4px);border-color:#555}
+.cover{height:190px;border-radius:13px;background:linear-gradient(135deg,#252525,#090909);display:flex;align-items:center;justify-content:center;font-size:52px;margin-bottom:18px}.badge{font-size:10px;background:#252525;color:#fff;padding:5px 8px;border-radius:7px}.product h3{margin:13px 0 7px}.product p{color:#777;font-size:13px;min-height:40px}.price{font-size:24px;font-weight:900;margin:16px 0}.price small{font-size:12px;color:#777;font-weight:400}.plans{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}.plan{padding:11px;border:1px solid #333;background:#121212;color:#fff;border-radius:9px;cursor:pointer;font-weight:700;font-size:12px}.plan.selected{background:#fff;color:#000;border-color:#fff}.buy{width:100%;padding:12px;border-radius:10px;background:#fff;color:#050505;font-weight:800;border:0;cursor:pointer}.buy:hover{background:#fff}
+footer{border-top:1px solid var(--line);padding:30px 6%;color:#666;text-align:center;font-size:12px}
+.cartbox{max-height:85vh;overflow:auto}.cartitem{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #292929}.cartitem strong{display:block;font-size:14px}.cartitem span{color:#888;font-size:12px}.remove{background:#1b1b1b;border:1px solid #333;color:#aaa;border-radius:7px;padding:6px 9px;cursor:pointer}.remove:hover{color:#fff;border-color:#666}.checkout{display:block}.checkout h2{margin-bottom:8px}.field{margin:14px 0}.field label{display:block;font-size:12px;color:#aaa;margin-bottom:7px}.field input{width:100%;padding:12px;background:#0b0b0b;border:1px solid #303030;border-radius:9px;color:#fff;outline:none}.field input:focus{border-color:#777}.checkoutsummary{padding:15px;background:#181818;border-radius:12px;margin:18px 0}.checkoutrow{display:flex;justify-content:space-between;margin:7px 0;font-size:13px}.checkoutrow span{color:#888}.back{background:none;border:0;color:#aaa;cursor:pointer;padding:0;margin-bottom:18px}.back:hover{color:#fff}.modal{display:none;position:fixed;inset:0;background:#000b;z-index:10;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.box{width:min(430px,100%);background:#111;border:1px solid #292929;border-radius:20px;padding:25px}.box h2{margin-bottom:10px}.box p{color:#888;font-size:13px;line-height:1.5}.close{float:right;background:none;color:#888;border:0;font-size:22px;cursor:pointer}.summary{margin:22px 0;padding:15px;background:#181818;border-radius:12px;display:flex;justify-content:space-between}.pix{width:100%;padding:13px;background:#fff;border:0;border-radius:10px;font-weight:900;cursor:pointer}.pixresult{display:none;margin-top:18px;padding:16px;background:#181818;border-radius:12px;text-align:center}.pixresult.open{display:block}.pixqr{max-width:220px;width:100%;background:#fff;padding:10px;border-radius:10px;margin:12px auto}.copybox{display:flex;gap:8px;margin-top:10px}.copybox input{flex:1;min-width:0;padding:10px;background:#0b0b0b;border:1px solid #303030;border-radius:9px;color:#fff}.copybox button{padding:10px 12px;border:1px solid #444;background:#fff;color:#000;border-radius:9px;font-weight:800;cursor:pointer}.status{font-size:12px;color:#aaa;margin-top:10px}
+@media(max-width:750px){nav{display:none}.grid{grid-template-columns:1fr}.hero{padding-top:65px}h1{letter-spacing:-2px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Snake Bypass</div>
+  <nav><a href="#inicio">Início</a><a href="#produtos">Produtos</a><a href="#suporte">Suporte</a></nav>
+  <button class="cart" onclick="openCart()">🛒 Carrinho <b id="count">0</b></button>
+</header>
+
+<main id="inicio">
+<section class="hero">
+  <div class="pill">⚡ ENTREGA DIGITAL</div>
+  <h1>Sua vantagem.<br><span>Do seu jeito.</span></h1>
+  <p>Produtos digitais da Snake com pagamento rápido e entrega automática. Escolha seu plano e tenha acesso em poucos minutos.</p>
+  <a class="btn" href="#produtos">Ver produtos</a>
+</section>
+
+<section id="produtos">
+  <div class="title"><div><h2>Produtos</h2><p>Escolha o plano ideal para você.</p></div></div>
+  <div class="grid">
+    <article class="product">
+      <div class="cover">🐍</div><span class="badge">MAIS VENDIDO</span>
+      <h3>Snake Basic</h3><p>Acesso ao plano Basic com os recursos incluídos no produto.</p>
+      <div class="price" data-month="45" data-life="100">R$ 45,00 <small>/ mensal</small></div>
+      <div class="plans">
+<button class="plan selected" onclick="selectPlan(this)">Mensal</button>
+<button class="plan" onclick="selectPlan(this)">Lifetime</button>
+</div>
+<button class="buy" onclick="addSelected('Snake Basic',45,100)">Adicionar ao carrinho</button>
+    </article>
+    <article class="product">
+      <div class="cover">⚡</div><span class="badge">AVANÇADO</span>
+      <h3>Snake Advanced</h3><p>Plano avançado para quem quer mais recursos e benefícios.</p>
+      <div class="price" data-month="70" data-life="150">R$ 70,00 <small>/ mensal</small></div>
+      <div class="plans">
+<button class="plan selected" onclick="selectPlan(this)">Mensal</button>
+<button class="plan" onclick="selectPlan(this)">Lifetime</button>
+</div>
+<button class="buy" onclick="addSelected('Snake Advanced',70,150)">Adicionar ao carrinho</button>
+    </article>
+
+  </div>
+</section>
+</main>
+<footer id="suporte">SNAKE+ © 2026 · Suporte pelo Discord</footer>
+
+<div class="modal" id="modal"><div class="box cartbox">
+<button class="close" onclick="closeCart()">×</button>
+<h2>Seu carrinho</h2>
+<p id="cartEmpty">Seu carrinho está vazio.</p>
+<div id="cartItems"></div>
+<div class="summary"><span>Total</span><b id="total">R$ 0,00</b></div>
+<button class="pix" onclick="showCheckout()">Continuar para pagamento</button>
+</div></div>
+<div class="modal" id="checkoutModal"><div class="box checkout">
+<button class="back" onclick="backToCart()">← Voltar ao carrinho</button>
+<h2>Finalizar compra</h2>
+<p>Preencha seus dados para continuar.</p>
+<div class="field"><label>Nome</label><input id="customerName" type="text" placeholder="Seu nome"></div>
+<div class="field"><label>E-mail</label><input id="customerEmail" type="email" placeholder="seu@email.com"></div>
+<div class="checkoutsummary">
+  <div id="checkoutItems"></div>
+  <div class="checkoutrow"><span>Total</span><b id="checkoutTotal">R$ 0,00</b></div>
+</div>
+<button class="pix" id="payBtn" onclick="startPayment()">Continuar para PIX</button>
+<div class="pixresult" id="pixResult">
+  <b>PIX gerado!</b>
+  <p style="margin-top:6px">Escaneie o QR Code ou use o Pix Copia e Cola.</p>
+  <img class="pixqr" id="pixQr" alt="QR Code PIX">
+  <div class="copybox"><input id="pixCode" readonly><button onclick="copyPix()">Copiar</button></div>
+  <div class="status" id="pixStatus">Aguardando pagamento no Sandbox.</div>
+</div>
+</div></div>
+
+<script>
+let cart=[];
+function add(name,price){cart.push({name,price});render();openCart()}
+function render(){
+  document.getElementById('count').textContent=cart.length;
+  const container=document.getElementById('cartItems');
+  const empty=document.getElementById('cartEmpty');
+  if(!cart.length){
+    empty.style.display='block';
+    container.innerHTML='';
+  }else{
+    empty.style.display='none';
+    container.innerHTML=cart.map((x,i)=>`
+      <div class="cartitem">
+        <div><strong>${x.name}</strong><span>Produto digital</span></div>
+        <div><strong>R$ ${x.price.toFixed(2).replace('.',',')}</strong>
+        <button class="remove" onclick="removeItem(${i})">Remover</button></div>
+      </div>`).join('');
+  }
+  let t=cart.reduce((a,x)=>a+x.price,0);
+  document.getElementById('total').textContent='R$ '+t.toFixed(2).replace('.',',');
+}
+function removeItem(i){cart.splice(i,1);render();}
+function openCart(){document.getElementById('modal').classList.add('open');render()}function closeCart(){document.getElementById('modal').classList.remove('open')}
+function selectPlan(btn){
+  const card = btn.closest('.product');
+  btn.parentElement.querySelectorAll('.plan').forEach(x=>x.classList.remove('selected'));
+  btn.classList.add('selected');
+  const price = card.querySelector('.price');
+  const isLife = btn.textContent.trim().toLowerCase() === 'lifetime';
+  const value = isLife ? price.dataset.life : price.dataset.month;
+  price.innerHTML = 'R$ ' + Number(value).toFixed(2).replace('.', ',') + ' <small>/ ' + (isLife ? 'lifetime' : 'mensal') + '</small>';
+}
+function addSelected(name,monthly,lifetime){
+  const card = event.target.closest('.product');
+  const selected = card.querySelector('.plan.selected').textContent;
+  add(name+' — '+selected, selected==='Mensal' ? monthly : lifetime);
+}
+function showCheckout(){
+  if(!cart.length){alert('Seu carrinho está vazio.');return;}
+  closeCart();
+  const c=document.getElementById('checkoutModal');
+  c.classList.add('open');
+  document.getElementById('checkoutItems').innerHTML=cart.map(x=>`<div class="checkoutrow"><span>${x.name}</span><b>R$ ${x.price.toFixed(2).replace('.',',')}</b></div>`).join('');
+  const total=cart.reduce((a,x)=>a+x.price,0);
+  document.getElementById('checkoutTotal').textContent='R$ '+total.toFixed(2).replace('.',',');
+}
+function backToCart(){document.getElementById('checkoutModal').classList.remove('open');openCart();}
+async function startPayment(){
+  const name=document.getElementById('customerName').value.trim();
+  const email=document.getElementById('customerEmail').value.trim();
+  if(!name || !email){alert('Preencha seu nome e e-mail para continuar.');return;}
+  const payBtn=document.getElementById('payBtn');
+  payBtn.disabled=true; payBtn.textContent='Gerando PIX...';
+  try{
+    const total=cart.reduce((a,x)=>a+x.price,0);
+    const items=cart.map((x,i)=>({reference_id:'snake-'+(i+1),name:x.name,quantity:1,unit_amount:Math.round(x.price*100)}));
+    const r=await fetch('/api/create-pix',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,items,total})});
+    const data=await r.json();
+    if(!r.ok) throw new Error(data.error || 'Não foi possível gerar o PIX.');
+    document.getElementById('pixQr').src=data.qr_code_image;
+    document.getElementById('pixCode').value=data.pix_copy_paste;
+    document.getElementById('pixResult').classList.add('open');
+    document.getElementById('pixStatus').textContent='Pedido '+data.order_id+' criado no Sandbox. Aguardando pagamento.';
+    payBtn.style.display='none';
+  }catch(e){alert(e.message)}finally{payBtn.disabled=false;if(payBtn.style.display!=='none')payBtn.textContent='Continuar para PIX';}
+}
+async function copyPix(){
+  const input=document.getElementById('pixCode');
+  try{await navigator.clipboard.writeText(input.value);document.querySelector('.copybox button').textContent='Copiado!';setTimeout(()=>document.querySelector('.copybox button').textContent='Copiar',1500)}catch(e){input.select();document.execCommand('copy');alert('Código PIX copiado.')}
+}
+function checkout(){showCheckout()}
+</script>
+</body>
+</html>
